@@ -4,7 +4,7 @@ A GitHub action to deploy your Docusaurus site to GitHub pages.
 
 ## Usage
 
-The project uses [repo deploy keys](https://developer.github.com/v3/guides/managing-deploy-keys/) to push to GitHub pages rather than access tokens, so make sure to setup your deploy key in the repo and then add it as a Secret under `DEPLOY_SSH_KEY`.
+The project uses [repo deploy keys](https://developer.github.com/v3/guides/managing-deploy-keys/) to push to GitHub pages rather than access tokens, so make sure to setup your deploy key in the repo and then add it as a Secret under `DEPLOY_SSH_KEY`. Also, you will need the `ALGOLIA_API_KEY` API key to have a functional search on the page.
 
 ```
 workflow "Build Docs" {
@@ -20,7 +20,7 @@ action "Filter Master" {
 action "Deploy Docs" {
   needs = ["Filter Master"]
   uses = "clay/docusaurus-github-action@master"
-  secrets = ["DEPLOY_SSH_KEY"]
+  secrets = ["DEPLOY_SSH_KEY", "ALGOLIA_API_KEY"]
 }
 ```
 
