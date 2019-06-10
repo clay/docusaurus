@@ -10,7 +10,7 @@ The project uses [repo deploy keys](https://developer.github.com/v3/guides/manag
 
 ### Update versions
 
-The project can update the version of the documentation using the `package.json` version as its reference.
+The project can update the version of the documentation using the `package.json` semantic version as its reference. This will only work with minor or patch updates for the first documentation versioning or in case of a major update you will need to perform this update manually. [Here](https://docusaurus.io/docs/en/versioning) you can check the steps to do the manual version update.
 
 ```
 workflow "Build Docs" {
@@ -24,11 +24,12 @@ action "Filter Master" {
 }
 
 action "Update version" {
+  needs = ["Filter Master"]
   uses = "clay/docusaurus-github-action/versions@master"
 }
 
 action "Deploy Docs" {
-  needs = ["Filter Master", "Update version"]
+  needs = ["Update version"]
   uses = "clay/docusaurus-github-action/build_deploy@master"
   secrets = ["DEPLOY_SSH_KEY", "ALGOLIA_API_KEY"]
 }
