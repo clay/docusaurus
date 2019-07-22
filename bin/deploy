@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ./project_settings
+. project_settings
 
 SSH_PATH="/root/.ssh"
 
