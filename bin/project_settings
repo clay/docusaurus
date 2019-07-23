@@ -3,7 +3,7 @@
 # Make sure PROJECT_NAME is set for the siteConfig.js file
 if [ -z ${PROJECT_NAME+x} ]; then
   echo "PROJECT_NAME is not set, falling back to default"
-  PROJECT_NAME="site"
+  PROJECT_NAME=${GITHUB_REPOSITORY#*/}
 else
   echo "PROJECT_NAME is set to '$PROJECT_NAME'"
 fi
