@@ -31,20 +31,22 @@ action "Filter Master" {
 
 action "Update version" {
   needs = ["Filter Master"]
-  uses = "clay/docusaurus-github-action/versions@master"
+  uses = "clay/docusaurus-github-action@master"
   args = "version"
   env={
-      BUILD_DIR = "website"
+      BUILD_DIR = "website",
+      PROJECT_NAME = "clay"
   }
 }
 
 action "Deploy Docs" {
   needs = ["Update version"]
-  uses = "clay/docusaurus-github-action/build_deploy@master"
+  uses = "clay/docusaurus-github-action@master"
   args="deploy"
   secrets = ["DEPLOY_SSH_KEY", "ALGOLIA_API_KEY"]
   env={
-      BUILD_DIR = "website"
+      BUILD_DIR = "website",
+      PROJECT_NAME = "clay"
   }
 }
 ```
