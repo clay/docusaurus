@@ -14,6 +14,11 @@ The project uses [repo deploy keys](https://developer.github.com/v3/guides/manag
 
 The project can update the version of the documentation using the `package.json` semantic version as its reference. This will only work with minor or patch updates for the first documentation versioning or in case of a major update you will need to perform this update manually. [Here](https://docusaurus.io/docs/en/versioning) you can check the steps to do the manual version update.
 
+## Filter and install
+We need to install the `Docusaurus` dependencies to process with the action; we use the [npm install action](https://github.com/actions/npm) to this purpose.  
+
+Also, we only activate the action when there is an update on the `master branch`. We use the [filter action](https://github.com/actions/bin/tree/master/filter) to check if the event that we target perform an update on master.
+
 ---
 
 We use the `args` attribute to know which action we need to run as you can see on the `main.workflow` example.
@@ -29,14 +34,16 @@ action "Filter Master" {
   args = "branch master"
 }
 
+action "Install" {
+  needs = ["Filter branch"]
+  uses = "actions/npm@master"
+  args = "install --prefix ./website"
+}
+
 action "Update version" {
-  needs = ["Filter Master"]
+  needs = ["Install"]
   uses = "clay/docusaurus-github-action@master"
   args = "version"
-  env={
-      BUILD_DIR = "website",
-      PROJECT_NAME = "clay"
-  }
 }
 
 action "Deploy Docs" {

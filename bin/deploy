@@ -24,7 +24,6 @@ cd $BUILD_DIR;
 
 git config --global user.name "$GITHUB_ACTOR" && \
 git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && \
-npm install && \
 npm run build && \
 npx gh-pages -d "build/$PROJECT_NAME" --repo "git@github.com:$GITHUB_REPOSITORY.git"
 # We need for force an SSH connection to use the SSH key so
